@@ -5,8 +5,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useLanguage } from "../context/LanguageContext";
-import { UNIT_TRANSLATION_KEYS } from "../hooks/useConversion";
 import type { UnitOption } from "../types";
 
 interface UnitSelectorProps {
@@ -24,8 +22,6 @@ export function UnitSelector({
   label,
   "data-ocid": dataOcid,
 }: UnitSelectorProps) {
-  const { t } = useLanguage();
-
   return (
     <div className="flex flex-col gap-1">
       {label && (
@@ -38,27 +34,21 @@ export function UnitSelector({
           className="h-11 bg-card border-border text-foreground font-body text-sm"
           data-ocid={dataOcid}
         >
-          <SelectValue placeholder={t("placeholderEnterValue")} />
+          <SelectValue placeholder="Enter value" />
         </SelectTrigger>
         <SelectContent className="max-h-64 bg-card border-border">
-          {units.map((unit) => {
-            const transKey = UNIT_TRANSLATION_KEYS[unit.code];
-            const localizedLabel = transKey ? t(transKey) : unit.label;
-            return (
-              <SelectItem
-                key={unit.code}
-                value={unit.code}
-                className="font-body text-sm cursor-pointer min-h-[44px] flex items-center"
-              >
-                <span className="font-semibold text-foreground mr-1">
-                  {unit.code}
-                </span>
-                <span className="text-muted-foreground">
-                  — {localizedLabel}
-                </span>
-              </SelectItem>
-            );
-          })}
+          {units.map((unit) => (
+            <SelectItem
+              key={unit.code}
+              value={unit.code}
+              className="font-body text-sm cursor-pointer min-h-[44px] flex items-center"
+            >
+              <span className="font-semibold text-foreground mr-1">
+                {unit.code}
+              </span>
+              <span className="text-muted-foreground">— {unit.label}</span>
+            </SelectItem>
+          ))}
         </SelectContent>
       </Select>
     </div>

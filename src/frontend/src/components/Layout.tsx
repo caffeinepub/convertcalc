@@ -9,46 +9,29 @@ import {
   Weight,
 } from "lucide-react";
 import { useState } from "react";
-import { useLanguage } from "../context/LanguageContext";
-import { LanguageSelector } from "./LanguageSelector";
 import { SettingsPanel } from "./SettingsPanel";
 import { ThemeToggle } from "./ThemeToggle";
 
 interface Tab {
   path: string;
-  labelKey: string;
+  label: string;
   Icon: React.ElementType;
   dataOcid: string;
 }
 
-const TAB_DEFS: Tab[] = [
-  {
-    path: "/",
-    labelKey: "tabCurrency",
-    Icon: DollarSign,
-    dataOcid: "tab-currency",
-  },
-  {
-    path: "/length",
-    labelKey: "tabLength",
-    Icon: Ruler,
-    dataOcid: "tab-length",
-  },
+const TABS: Tab[] = [
+  { path: "/", label: "Currency", Icon: DollarSign, dataOcid: "tab-currency" },
+  { path: "/length", label: "Length", Icon: Ruler, dataOcid: "tab-length" },
   {
     path: "/temperature",
-    labelKey: "tabTemperature",
+    label: "Temperature",
     Icon: Thermometer,
     dataOcid: "tab-temperature",
   },
-  {
-    path: "/weight",
-    labelKey: "tabWeight",
-    Icon: Weight,
-    dataOcid: "tab-weight",
-  },
+  { path: "/weight", label: "Weight", Icon: Weight, dataOcid: "tab-weight" },
   {
     path: "/volume",
-    labelKey: "tabVolume",
+    label: "Volume",
     Icon: FlaskConical,
     dataOcid: "tab-volume",
   },
@@ -62,12 +45,6 @@ export function Layout({ children }: LayoutProps) {
   const router = useRouter();
   const pathname = router.state.location.pathname;
   const [settingsOpen, setSettingsOpen] = useState(false);
-  const { t } = useLanguage();
-
-  const TABS = TAB_DEFS.map((tab) => ({
-    ...tab,
-    label: t(tab.labelKey as Parameters<typeof t>[0]),
-  }));
 
   return (
     <div className="flex flex-col min-h-screen bg-background">
@@ -79,9 +56,8 @@ export function Layout({ children }: LayoutProps) {
             ConvertCalc
           </h1>
 
-          {/* Right controls — respect RTL direction via gap + natural flow */}
+          {/* Right controls */}
           <div className="flex items-center gap-0.5">
-            <LanguageSelector />
             <Button
               variant="ghost"
               size="icon"

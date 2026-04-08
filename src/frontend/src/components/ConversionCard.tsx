@@ -2,11 +2,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ArrowLeftRight } from "lucide-react";
 import { useCallback } from "react";
-import { useLanguage } from "../context/LanguageContext";
-import { UNIT_TRANSLATION_KEYS, useConversion } from "../hooks/useConversion";
+import { useConversion } from "../hooks/useConversion";
 import type { ConversionType } from "../types";
 import { HistoryPanel } from "./HistoryPanel";
-import { SpeakButton } from "./SpeakButton";
 import { UnitSelector } from "./UnitSelector";
 
 interface ConversionCardProps {
@@ -15,9 +13,14 @@ interface ConversionCardProps {
 
 const PRECISION_OPTIONS = [0, 1, 2, 3, 4, 6, 8];
 
-export function ConversionCard({ type }: ConversionCardProps) {
-  const { t, formatNumber, currentLanguage } = useLanguage();
+function formatNumber(value: number, precision: number): string {
+  return new Intl.NumberFormat("en-US", {
+    maximumFractionDigits: precision,
+    minimumFractionDigits: 0,
+  }).format(value);
+}
 
+export function ConversionCard({ type }: ConversionCardProps) {
   const {
     units,
     fromUnit,
@@ -40,15 +43,15 @@ export function ConversionCard({ type }: ConversionCardProps) {
   const toUnit_ = units.find((u) => u.code === toUnit);
   const toSymbol = toUnit_?.symbol ?? toUnit;
 
-  // Localized result text for TTS: "42.5 Kilometers"
-  const toUnitTransKey = UNIT_TRANSLATION_KEYS[toUnit];
-  const toUnitLabel = toUnitTransKey
-    ? t(toUnitTransKey)
-    : (toUnit_?.label ?? toUnit);
+  const isZeroOrEmpty =
+    inputValue === "" || inputValue === "0" || Number(inputValue) === 0;
+
   const formattedResult =
-    isValid && result !== null ? formatNumber(result, precision) : "—";
-  const speakText =
-    isValid && result !== null ? `${formattedResult} ${toUnitLabel}` : "";
+    isValid && result !== null && !isZeroOrEmpty
+      ? formatNumber(result, precision)
+      : isZeroOrEmpty
+        ? "0"
+        : "—";
 
   const handleConvert = useCallback(() => {
     addToHistory();
@@ -62,7 +65,7 @@ export function ConversionCard({ type }: ConversionCardProps) {
           units={units}
           value={fromUnit}
           onChange={setFromUnit}
-          label={t("labelFrom")}
+          label="From"
           data-ocid="from-unit-selector"
         />
         <Input
@@ -70,7 +73,7 @@ export function ConversionCard({ type }: ConversionCardProps) {
           inputMode="decimal"
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
-          placeholder={t("placeholderEnterValue")}
+          placeholder="0"
           className="h-14 text-2xl font-mono font-semibold bg-background border-border text-foreground px-4 rounded-xl focus:ring-2 focus:ring-primary/40 focus:border-primary transition-smooth [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
           data-ocid="from-input"
         />
@@ -83,7 +86,7 @@ export function ConversionCard({ type }: ConversionCardProps) {
           size="icon"
           onClick={swap}
           className="h-11 w-11 rounded-xl bg-card border-border shadow-sm hover:bg-muted/60 transition-smooth"
-          aria-label={t("btnSwap")}
+          aria-label="Swap units"
           data-ocid="swap-button"
         >
           <ArrowLeftRight className="h-4 w-4 text-foreground" />
@@ -96,21 +99,32 @@ export function ConversionCard({ type }: ConversionCardProps) {
           units={units}
           value={toUnit}
           onChange={setToUnit}
-          label={t("labelTo")}
+          label="To"
           data-ocid="to-unit-selector"
         />
         <div
           className={`h-14 flex items-center px-4 rounded-xl border text-2xl font-mono font-semibold select-all cursor-text
             ${
-              isValid
+              isValid && !isZeroOrEmpty
                 ? "bg-muted/50 border-border text-foreground"
-                : "bg-muted/30 border-border/50 text-muted-foreground"
+                : isZeroOrEmpty
+                  ? "bg-muted/50 border-border text-foreground"
+                  : "bg-muted/30 border-border/50 text-muted-foreground"
             }`}
           aria-live="polite"
-          aria-label={`${t("labelResult")}: ${isValid ? `${formattedResult} ${toSymbol}` : t("errorInvalidNumber")}`}
+          aria-label={`Result: ${isValid ? `${formattedResult} ${toSymbol}` : "Please enter a valid number"}`}
           data-ocid="result-display"
         >
-          {isValid ? (
+          {isZeroOrEmpty ? (
+            <span className="flex items-center gap-2 flex-1 min-w-0">
+              <span className="flex-1 min-w-0 truncate">
+                0
+                <span className="text-base font-sans font-normal text-muted-foreground ml-2">
+                  {toSymbol}
+                </span>
+              </span>
+            </span>
+          ) : isValid ? (
             <span className="flex items-center gap-2 flex-1 min-w-0">
               <span className="flex-1 min-w-0 truncate">
                 {formattedResult}
@@ -118,16 +132,10 @@ export function ConversionCard({ type }: ConversionCardProps) {
                   {toSymbol}
                 </span>
               </span>
-              <SpeakButton
-                text={speakText}
-                lang={currentLanguage}
-                aria-label={t("btnSpeak")}
-                data-ocid="result-speak-btn"
-              />
             </span>
           ) : (
             <span className="text-muted-foreground text-base font-sans font-normal">
-              {t("placeholderEnterValue")}
+              Enter value
             </span>
           )}
         </div>
@@ -136,7 +144,7 @@ export function ConversionCard({ type }: ConversionCardProps) {
       {/* Precision selector */}
       <fieldset className="flex items-center gap-2 px-1 border-none p-0 m-0">
         <legend className="text-xs text-muted-foreground font-medium float-left">
-          {t("labelResult")}:
+          Result:
         </legend>
         <div className="flex gap-1 ml-2">
           {PRECISION_OPTIONS.map((p) => (
@@ -167,7 +175,7 @@ export function ConversionCard({ type }: ConversionCardProps) {
           className="h-14 w-full text-base font-semibold rounded-2xl bg-primary text-primary-foreground hover:opacity-90 transition-smooth shadow-sm disabled:opacity-40"
           data-ocid="convert-button"
         >
-          {t("btnConvert")}
+          Convert
         </Button>
         <Button
           variant="outline"
@@ -175,7 +183,7 @@ export function ConversionCard({ type }: ConversionCardProps) {
           className="h-12 w-full text-sm font-medium rounded-2xl border-destructive/40 text-destructive hover:bg-destructive/10 transition-smooth"
           data-ocid="reset-button"
         >
-          {t("btnReset")}
+          Reset
         </Button>
       </div>
 

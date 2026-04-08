@@ -1,8 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ChevronDown, ChevronUp, Clock, Trash2 } from "lucide-react";
 import { useState } from "react";
-import { useLanguage } from "../context/LanguageContext";
-import type { TranslationKeys } from "../i18n/translations/en";
 import type { ConversionHistoryItem } from "../types";
 
 interface HistoryPanelProps {
@@ -20,18 +18,14 @@ function formatValue(v: number): string {
   return v.toExponential(3);
 }
 
-function timeAgoLabel(
-  diff: number,
-  t: (key: keyof TranslationKeys) => string,
-): string {
-  if (diff < 60000) return t("timeJustNow");
+function timeAgoLabel(diff: number): string {
+  if (diff < 60000) return "just now";
   if (diff < 3600000) return `${Math.floor(diff / 60000)}m`;
   return `${Math.floor(diff / 3600000)}h`;
 }
 
 export function HistoryPanel({ history, onClear }: HistoryPanelProps) {
   const [open, setOpen] = useState(false);
-  const { t } = useLanguage();
 
   if (history.length === 0) return null;
 
@@ -49,7 +43,7 @@ export function HistoryPanel({ history, onClear }: HistoryPanelProps) {
       >
         <span className="flex items-center gap-2">
           <Clock className="h-4 w-4 text-muted-foreground" />
-          {t("labelHistory")}{" "}
+          History{" "}
           <span className="text-muted-foreground font-normal">
             ({history.length})
           </span>
@@ -73,7 +67,7 @@ export function HistoryPanel({ history, onClear }: HistoryPanelProps) {
                 data-ocid="history-clear"
               >
                 <Trash2 className="h-3 w-3" />
-                {t("clearHistory")}
+                Clear History
               </Button>
             </div>
           )}
@@ -96,7 +90,7 @@ export function HistoryPanel({ history, onClear }: HistoryPanelProps) {
                   </span>
                 </span>
                 <span className="text-xs text-muted-foreground ml-3 shrink-0">
-                  {timeAgoLabel(Date.now() - item.timestamp, t)}
+                  {timeAgoLabel(Date.now() - item.timestamp)}
                 </span>
               </li>
             ))}

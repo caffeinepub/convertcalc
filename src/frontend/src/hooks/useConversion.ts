@@ -204,77 +204,6 @@ export const UNIT_LISTS: Record<ConversionType, UnitOption[]> = {
   ],
 };
 
-// ── Unit code → translation key map ─────────────────────────────────────────
-// Maps each unit code to a key in the translation files
-
-import type { TranslationKeys } from "../i18n/translations/en";
-
-export const UNIT_TRANSLATION_KEYS: Partial<
-  Record<string, keyof TranslationKeys>
-> = {
-  // Currency
-  USD: "currencyUSD",
-  EUR: "currencyEUR",
-  GBP: "currencyGBP",
-  JPY: "currencyJPY",
-  AUD: "currencyAUD",
-  CAD: "currencyCAD",
-  CHF: "currencyCHF",
-  INR: "currencyINR",
-  CNY: "currencyCNY",
-  MXN: "currencyMXN",
-  BRL: "currencyBRL",
-  KRW: "currencyKRW",
-  SGD: "currencySGD",
-  HKD: "currencyHKD",
-  SEK: "currencySEK",
-  NOK: "currencyNOK",
-  DKK: "currencyDKK",
-  NZD: "currencyNZD",
-  ZAR: "currencyZAR",
-  RUB: "currencyRUB",
-  THB: "currencyTHB",
-  LAK: "currencyLAK",
-  VND: "currencyVND",
-  IDR: "currencyIDR",
-  // Length
-  m: "unitMeter",
-  cm: "unitCentimeter",
-  km: "unitKilometer",
-  in: "unitInch",
-  ft: "unitFoot",
-  yd: "unitYard",
-  mi: "unitMile",
-  mm: "unitMillimeter",
-  nmi: "unitNauticalMile",
-  // Temperature
-  C: "unitCelsius",
-  F: "unitFahrenheit",
-  K: "unitKelvin",
-  R: "unitRankine",
-  // Weight
-  kg: "unitKilogram",
-  g: "unitGram",
-  lb: "unitPound",
-  oz: "unitOunce",
-  t: "unitTon",
-  mg: "unitMilligram",
-  st: "unitStone",
-  // Volume
-  l: "unitLiter",
-  ml: "unitMilliliter",
-  cl: "unitCentiliter",
-  dl: "unitDeciliter",
-  m3: "unitCubicMeter",
-  gal: "unitGallon",
-  cup: "unitCup",
-  floz: "unitFluidOunce",
-  tbsp: "unitTablespoon",
-  tsp: "unitTeaspoon",
-  pt: "unitPint",
-  qt: "unitQuart",
-};
-
 const DEFAULT_UNITS: Record<ConversionType, [string, string]> = {
   currency: ["USD", "EUR"],
   length: ["in", "cm"],
@@ -288,7 +217,7 @@ const DEFAULT_UNITS: Record<ConversionType, [string, string]> = {
 export function useConversion(type: ConversionType) {
   const [fromUnit, setFromUnit] = useState<string>(DEFAULT_UNITS[type][0]);
   const [toUnit, setToUnit] = useState<string>(DEFAULT_UNITS[type][1]);
-  const [inputValue, setInputValue] = useState<string>("1");
+  const [inputValue, setInputValue] = useState<string>("");
   const [precision, setPrecision] = useState<number>(4);
   const [history, setHistory] = useState<ConversionHistoryItem[]>([]);
 
@@ -329,7 +258,7 @@ export function useConversion(type: ConversionType) {
   }, [result, isValid, type, numericInput, fromUnit, toUnit]);
 
   const reset = useCallback(() => {
-    setInputValue("1");
+    setInputValue("");
     setFromUnit(DEFAULT_UNITS[type][0]);
     setToUnit(DEFAULT_UNITS[type][1]);
   }, [type]);
