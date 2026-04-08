@@ -1,0 +1,17 @@
+service : {
+  convertCurrency: (amount: float64, fromCurrency: text, toCurrency: 
+   text) -> (float64) query;
+  convertLength: (amount: float64, fromUnit: text, toUnit: text) ->
+   (float64) query;
+  convertTemperature: (amount: float64, fromUnit: text, toUnit: text) ->
+   (float64) query;
+  convertVolume: (amount: float64, fromUnit: text, toUnit: text) ->
+   (float64) query;
+  convertWeight: (amount: float64, fromUnit: text, toUnit: text) ->
+   (float64) query;
+  getLengthUnits: () -> (vec text) query;
+  getSupportedCurrencies: () -> (vec text) query;
+  getTemperatureUnits: () -> (vec text) query;
+  getVolumeUnits: () -> (vec text) query;
+  getWeightUnits: () -> (vec text) query;
+}

@@ -1,0 +1,25 @@
+{
+  "overview": "A responsive multi-conversion calculator supporting currency exchange, length, temperature, weight, and volume conversions. Optimized for mobile use on iOS and Android as a progressive web app.",
+  "features": [
+    "Currency converter with major currencies (USD, EUR, GBP, JPY, AUD, CAD, INR, CNY)",
+    "Length converter (inches, cm, feet, meters, miles, km)",
+    "Temperature converter (Celsius, Fahrenheit, Kelvin)",
+    "Weight converter (lbs, kg, grams, ounces, stones)",
+    "Volume converter (liters, gallons, ml, fl oz, cups, pints)",
+    "Real-time conversion as you type",
+    "Swap units button for quick reversal",
+    "Conversion history and favorites",
+    "Light/dark mode",
+    "Mobile-optimized with touch-friendly controls"
+  ],
+  "category": "tool",
+  "tags": [
+    "calculator",
+    "converter",
+    "currency",
+    "units",
+    "mobile",
+    "tool"
+  ],
+  "last_updated": "2026-04-08T16:37:30.704Z"
+}

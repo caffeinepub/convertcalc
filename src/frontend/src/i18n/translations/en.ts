@@ -1,0 +1,161 @@
+export const en = {
+  // App
+  appName: "ConvertCalc",
+  appTagline: "Calculator & Unit Converter",
+
+  // Navigation / Tabs
+  tabCurrency: "Currency",
+  tabLength: "Length",
+  tabTemperature: "Temperature",
+  tabWeight: "Weight",
+  tabVolume: "Volume",
+
+  // Buttons
+  btnConvert: "Convert",
+  btnReset: "Reset",
+  btnSwap: "Swap",
+  btnClear: "Clear",
+  btnHistory: "History",
+  btnClose: "Close",
+  btnSettings: "Settings",
+  btnSave: "Save",
+  btnCopy: "Copy",
+  btnSpeak: "Speak",
+  btnLanguage: "Language",
+
+  // Placeholders / Labels
+  placeholderEnterValue: "Enter value",
+  labelFrom: "From",
+  labelTo: "To",
+  labelResult: "Result",
+  labelHistory: "History",
+  labelFavorites: "Favorites",
+  labelSettings: "Settings",
+  labelLanguage: "Language",
+  labelTheme: "Theme",
+  labelVoice: "Voice",
+  labelVolume: "Volume",
+  labelSpeed: "Speed",
+  labelTextToSpeech: "Text to Speech",
+  labelAudioFeedback: "Audio Feedback",
+
+  // Section headings
+  headingConverter: "Converter",
+  headingResult: "Result",
+  headingConversionHistory: "Conversion History",
+  headingNoHistory: "No history yet",
+  headingNoFavorites: "No favorites yet",
+
+  // Error messages
+  errorInvalidNumber: "Please enter a valid number",
+  errorSelectUnits: "Please select units to convert",
+  errorNoResult: "Could not calculate result",
+
+  // Theme
+  themeLight: "Light",
+  themeDark: "Dark",
+  themeSystem: "System",
+
+  // Currency names
+  currencyUSD: "US Dollar",
+  currencyEUR: "Euro",
+  currencyGBP: "British Pound",
+  currencyJPY: "Japanese Yen",
+  currencyAUD: "Australian Dollar",
+  currencyCAD: "Canadian Dollar",
+  currencyCHF: "Swiss Franc",
+  currencyINR: "Indian Rupee",
+  currencyCNY: "Chinese Yuan",
+  currencyMXN: "Mexican Peso",
+  currencyBRL: "Brazilian Real",
+  currencyKRW: "South Korean Won",
+  currencySGD: "Singapore Dollar",
+  currencyHKD: "Hong Kong Dollar",
+  currencySEK: "Swedish Krona",
+  currencyNOK: "Norwegian Krone",
+  currencyDKK: "Danish Krone",
+  currencyNZD: "New Zealand Dollar",
+  currencyZAR: "South African Rand",
+  currencyRUB: "Russian Ruble",
+  currencyTHB: "Thai Baht",
+  currencyLAK: "Lao Kip",
+  currencyVND: "Vietnamese Dong",
+  currencyIDR: "Indonesian Rupiah",
+
+  // Length units
+  unitMeter: "Meter",
+  unitMeters: "Meters",
+  unitCentimeter: "Centimeter",
+  unitCentimeters: "Centimeters",
+  unitKilometer: "Kilometer",
+  unitKilometers: "Kilometers",
+  unitInch: "Inch",
+  unitInches: "Inches",
+  unitFoot: "Foot",
+  unitFeet: "Feet",
+  unitYard: "Yard",
+  unitYards: "Yards",
+  unitMile: "Mile",
+  unitMiles: "Miles",
+  unitMillimeter: "Millimeter",
+  unitMillimeters: "Millimeters",
+  unitNauticalMile: "Nautical Mile",
+
+  // Temperature units
+  unitCelsius: "Celsius",
+  unitFahrenheit: "Fahrenheit",
+  unitKelvin: "Kelvin",
+  unitRankine: "Rankine",
+
+  // Weight units
+  unitKilogram: "Kilogram",
+  unitKilograms: "Kilograms",
+  unitGram: "Gram",
+  unitGrams: "Grams",
+  unitPound: "Pound",
+  unitPounds: "Pounds",
+  unitOunce: "Ounce",
+  unitOunces: "Ounces",
+  unitTon: "Ton",
+  unitTons: "Tons",
+  unitMilligram: "Milligram",
+  unitMilligrams: "Milligrams",
+  unitStone: "Stone",
+
+  // Volume units
+  unitLiter: "Liter",
+  unitLiters: "Liters",
+  unitMilliliter: "Milliliter",
+  unitMilliliters: "Milliliters",
+  unitCentiliter: "Centiliter",
+  unitDeciliter: "Deciliter",
+  unitCubicMeter: "Cubic Meter",
+  unitGallon: "Gallon",
+  unitGallons: "Gallons",
+  unitCup: "Cup",
+  unitCups: "Cups",
+  unitFluidOunce: "Fluid Ounce",
+  unitFluidOunces: "Fluid Ounces",
+  unitTablespoon: "Tablespoon",
+  unitTablespoons: "Tablespoons",
+  unitTeaspoon: "Teaspoon",
+  unitTeaspoons: "Teaspoons",
+  unitPint: "Pint",
+  unitQuart: "Quart",
+
+  // Misc
+  clearHistory: "Clear History",
+  noConversionsYet: "No conversions yet. Start converting!",
+  copyToClipboard: "Copied to clipboard",
+  exchangeRateNote: "Rates are approximate",
+  timeJustNow: "just now",
+
+  // Page descriptions
+  descCurrency: "Convert between world currencies",
+  descLength: "Inches, centimeters, feet, meters, miles & more",
+  descTemperature: "Celsius, Fahrenheit, Kelvin & Rankine",
+  descWeight: "Kilograms, pounds, grams, ounces, stones & more",
+  descVolume: "Liters, gallons, milliliters, fluid ounces, cups, pints & more",
+};
+
+export type TranslationKeys = typeof en;
